@@ -212,7 +212,16 @@ footer{
     margin-top: 10px;
     background-color: #003f54;
 }
+.ad small{
+    background-color: #634a24;
+    color:#ffffff;
+}
+.adItem{
 
+}
+.adItem img{
+
+}
 .reveal-modal{
     z-index: 400;
 }
