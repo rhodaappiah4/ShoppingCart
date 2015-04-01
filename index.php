@@ -52,7 +52,7 @@
 
 
         $records_per_page=4;
-        $pageNumber=0;
+        $pageNumber=1;
         $limit=[];
 
         $cart = new cart_functions();
@@ -70,6 +70,8 @@
                 $pageNumber = $_REQUEST['page'];
                 $limit['start']=($_REQUEST['page']-1)*$records_per_page;
                 $limit['numrows']=$records_per_page;
+            }else{
+                header('location: index.php?page=1');
             }
             $cart->get_product($limit);
         }elseif(isset($_REQUEST['cat'])) {

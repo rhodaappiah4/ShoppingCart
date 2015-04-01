@@ -1,5 +1,12 @@
 <?php
 session_start();
+if(isset($_REQUEST['logout'])){
+    $_SESSION['username'] = null;
+    session_destroy();
+}
+if($_SESSION['username'] == null){
+    header('location: index.php');
+}
 ?>
 <html>
 <head>
@@ -17,6 +24,15 @@ session_start();
 
         <li><a href="./#">Your shopping cart</a></li>
     </ul>
+    <div class="right">
+        <button href="#" data-dropdown="drop1" aria-controls="drop1" aria-expanded="false" class="button dropdown">
+            Hello, <?php echo @$_SESSION['username']!= null? @$_SESSION['username'] : "Who are you?"; ?>
+        </button><br>
+        <ul id="drop1" data-dropdown-content class="f-dropdown" aria-hidden="true">
+            <li class="active" ><a id="logout" href="?logout">Logout</a></li>
+        </ul>
+
+    </div>
     <form class="right search" action="index.php">
         <label><input type="text" name="search" placeholder="Search..."><i class="icon-search"></i></label>
     </form>
@@ -75,6 +91,7 @@ session_start();
         <div class="columns small-8 ad">
             <small>AD</small>
             <div class="row">
+
             <?php
             $i=0;
             while($i < count($cart_decoded) ) {
@@ -82,8 +99,9 @@ session_start();
                 $cart->advertisement($cart_decoded[$i]->pid);
                 while ($row = $cart->fetch()) {
                    ?>
-                    <div class="small-3 columns adItem">
-                    <img data-reveal-id="details" src="<?= $row['imagelocation'] ?>">
+                    <div class="small-2 columns ad--Item">
+                        <img data-reveal-id="details" src="<?= $row['imagelocation'] ?>">
+                        <span data-reveal-id="details" class="product caption"><?= $row['description'] ?></span>
                     </div>
                <?php }
                 $i++;

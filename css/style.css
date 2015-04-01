@@ -216,11 +216,11 @@ footer{
     background-color: #634a24;
     color:#ffffff;
 }
-.adItem{
+.ad--Item{
 
 }
-.adItem img{
-
+.ad--Item img{
+    height: 200px;
 }
 .reveal-modal{
     z-index: 400;
