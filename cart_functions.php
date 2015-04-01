@@ -139,18 +139,20 @@ class cart_functions extends adb{
 		return true;
 	}
 
-	function get_product($start,$num_records_per_page){
+	function get_product($limit=[]){
+        
 		$sql_query="SELECT product_id,product_name,description,imagelocation,fk_category_id,quantity,fk_color_id,price,
-		last_updated FROM product LIMIT $start,$num_records_per_page";
+		last_updated FROM product".(empty($limit)?"":" LIMIT ".$limit['start'].",".$limit['numrows']);
 		if (!$this->query($sql_query)){
+            echo $this->err();
 			return false;
 		}
 		return true;
 	}
 
-    function get_product_by_id($product_id){
+    function get_product_by_id($product_id,$limit=[]){
         $sql_query="SELECT product_id,product_name,description,imagelocation,fk_category_id,quantity,fk_color_id,price,
-		last_updated FROM product WHERE product_id =".$product_id;
+		last_updated FROM product WHERE product_id =".$product_id.(empty($limit)?"":" LIMIT ".$limit['start'].",".$limit['numrows']);
         if (!$this->query($sql_query)){
             return false;
         }
@@ -368,8 +370,14 @@ class cart_functions extends adb{
     }
 
     function advertisement($fk_product_id){
-        $sql_query="select product_id, tag_id from product, tags, product_has_tags
-        where product_id=fk_product_id and tag_id=fk_tags_id and product_id=".$fk_product_id;
+        $sql_query="select product_name, tag_name, tags.tag_id from product,
+                    tags,product_has_tags,
+                        (select product_id, tags.tag_id
+                         from product, tags, product_has_tags
+                         where product_id = fk_product_id and tag_id = fk_tags_id
+                                and product_id = $fk_product_id) as productTags
+                    where product.product_id = product_has_tags.fk_product_id and tags.tag_id = fk_tags_id
+                            and fk_tags_id = productTags.tag_id group by product_name";
         if (!$this->query($sql_query)){
             return false;
         }

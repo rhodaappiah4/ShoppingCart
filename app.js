@@ -6,17 +6,18 @@ $(document).ready(function(){
     var url,array;
     $('.item').click(function(){
         var product_id = $(this).find('.itemId').html();
-
+        console.log(product_id);
         var imageLocation = $(this).find('img').attr('src');
-        $("#details").find('img').attr('src',imageLocation);
-        $('#details .product_id').html(product_id);
+        var details = $("#details");
+        details.find('img').attr('src',imageLocation);
+        details.find('.product_id').html(product_id);
         $.get('ajax.php',{product_id:product_id},function(data){
-            $('#details .product_name').html(data.product_name);
-            $('#details .description').html(data.description);
-            $('#details .category_name').html(data.category_name);
-            $('#details .quantity').html(data.quantity>0?"In stock":"Out of stock");
-            $('#details .color_name').html(data.color_name);
-            $('#details .price').html('GHC '+data.price);
+            console.log(data);
+            details.find('.product_name').html(data.product_name);
+            details.find('.description').html(data.description);
+            details.find('.category_name').html(data.category_name);
+            details.find('.color_name').html(data.color_name);
+            details.find('.price').html('GHC '+data.price);
         },"json");
 
     });
@@ -95,6 +96,9 @@ function updateCart(){
 function removefromCart(){
     $('.item').remove();
     alert("You have no items in your cart");
+}
+function redirWithHash( urlStart){
+    location.href = urlStart + location.hash
 }
 //function add_details($fk_customer_id,$fk_order_id,$fk_product_id){
 //    $sql_query="INSERT INTO order_details (fk_customer_id,fk_order_id,fk_product_id) VALUES ($fk_customer_id,

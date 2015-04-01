@@ -48,54 +48,59 @@
     </div>
 
     <div class="row">
-    <?php require 'cart_functions.php';
-    $num_records_per_page=2;
-    $start=0;
-    $page="";
-    $page=$_REQUEST['page'];
-    if ($page="" || $page=="1"){
-        $start=0;
-    }
-    else{
-        $start=($page*2)-2;
-    }
-
-    $cart = new cart_functions();
-    if(isset($_REQUEST['cat'])) {
-        $v = $cart->get_products_inCategory($_REQUEST['cat']);
-    }else if(isset($_REQUEST['search'])){
-        $cart->search($_REQUEST['search']);
-    }else if(isset($_REQUEST['page'])){
-        $v=$cart->get_product($start,$num_records_per_page);
-    }
+        <?php require 'cart_functions.php';
 
 
+        $records_per_page=4;
+        $pageNumber=0;
+        $limit=[];
 
-    while($row = $cart->fetch()){
+        $cart = new cart_functions();
+        function page($pg){
+            if($url = strstr($_SERVER['REQUEST_URI'],"?page=")){
+                return(preg_replace('/page=[\d]/',"page=".$pg,$url));
+            }elseif($url = strstr($_SERVER['REQUEST_URI'],"?")){
+                return(str_replace("?","?page=".$pg."&",$url));
+            }
+            return "?page=".$pg;
+        }
 
-        $count = get_num_rows();
 
-        $a=ceil($count/$num_records_per_page);
+        if(empty($_REQUEST) || isset($_REQUEST['page'])){
+            if(isset($_REQUEST['page'])){
+                $pageNumber = $_REQUEST['page'];
+                $limit['start']=($_REQUEST['page']-1)*$records_per_page;
+                $limit['numrows']=$records_per_page;
+            }
+            $cart->get_product($limit);
+        }elseif(isset($_REQUEST['cat'])) {
+            $cart->get_products_inCategory($_REQUEST['cat'],$limit);
+        }elseif(isset($_REQUEST['search'])){
+            $cart->search($_REQUEST['search']);
+        }
 
-        for($b=1;$b<$a;$b++){
-            echo "<a href='index.php?page='.$b></a>";
-            echo $b;
+
+        while($row = $cart->fetch()){
+            ?>
+
+            <div class="columns small-4" >
+                <div class="item">
+                    <span class="itemId" style="display: none"><?php echo $row['product_id'] ?></span>
+                    <img data-reveal-id="details" src="<?php echo $row['imagelocation'] ?>" >
+                    <span data-reveal-id="details" class="product caption"><?php echo $row['product_name'] ?></span>
+                    <span class="add" onclick="addtoCart(this)">Add to cart</span>
+                    <span  data-reveal-id="details" class="price caption"><?php echo 'GHC '.$row['price'] ?></span>
+                </div>
+
+            </div>
+        <?php
         }
         ?>
-
-        <div class="columns small-4" >
-            <div class="item">
-                <span class="itemId" style="display: none"><?php echo $row['product_id'] ?></span>
-                <img data-reveal-id="details" src="<?php echo $row['imagelocation'] ?>" >
-                <span data-reveal-id="details" class="product caption"><?php echo $row['product_name'] ?></span>
-                <span class="add" onclick="addtoCart(this)">Add to cart</span>
-                <span  data-reveal-id="details" class="price caption"><?php echo 'GHC '.$row['price'] ?></span>
-            </div>
-            <button id="load" value="Load more">
+        <div class="columns small-12">
+            <a onclick="redirWithHash('<?=page($pageNumber-1) ?>')">Prev</a>
+            <a onclick="redirWithHash('<?=page($pageNumber+1) ?>')">Next</a>
         </div>
-    <?php
-    }
-    ?>
+
     </div>
 
 </main>
@@ -104,7 +109,7 @@
 <div id="details" class="reveal-modal small" data-reveal>
     <div class="row">
         <div class="small-6 columns">
-            <div id="imageHolder">
+            <div id="imageHolder" >
                 <img src="img/accessory1.jpeg"/>
             </div>
         </div>
@@ -121,15 +126,6 @@
         </div>
     </div>
 </div>
-
-<!--<div id="login" class="reveal-modal small" data-reveal>-->
-<!--    <div class="row">-->
-<!--        <div class="small-6 columns">-->
-<!--            <div class="username">Username<input type="text"></div><br>-->
-<!--            <input class="button" type="submit" value="Login">-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
 
 <script>
     $(document).foundation();

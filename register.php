@@ -57,31 +57,48 @@ if (isset($_REQUEST['customer_password'])){
 }
 if(isset($_REQUEST['register'])){
     $c->add_customer($firstname,$lastname,$gender,$date_of_birth,$home_address,$email_address,$phone_number,
-              $username,$customer_password);
+        $username,$customer_password);
 }
 ?>
 
 <html>
-<!--<head>-->
-<!--    <link rel="stylesheet" href="css/foundation.min.css">-->
-<!--    <link rel="stylesheet" href="css/style.css">-->
-<!--    <script src="jquery-1.11.0.js" type="text/javascript"></script>-->
-<!--    <script src="foundation.min.js" type="text/javascript"></script>-->
-<!--    <script type="text/javascript" src="app.js"></script>-->
-<!--    <title>Registration</title>-->
-<!--</head>-->
+<head>
+    <link rel="stylesheet" href="css/foundation.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="jquery-1.11.0.js" type="text/javascript"></script>
+    <script src="foundation.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="app.js"></script>
+    <title>Registration</title>
+</head>
 <body>
+<nav>
+    <ul>
+        <li><strong><a href="./">Shopping.com</a></strong></li>
+
+        <li><a href="./#">All items</a></li>
+        <li id="shoes"><a href="?cat=3#shoes">Shoes</a></li>
+        <li id="earring"><a href="?cat=2#earring">Earrings</a></li>
+        <li id="necklace"><a href="?cat=1#necklace">Necklaces</a></li>
+        <li id="bracelet"><a href="?cat=4#bracelet">Bracelet</a></li>
+    </ul>
+    <form class="right search" action="index.php">
+        <label><input type="text" name="search" placeholder="Search..."><i class="icon-search"></i></label>
+    </form>
+
+</nav>
 <form action="register.php" method="GET">
-    <div>First Name:<input type="text" size=12 name="firstname"></div>
-    <div>Last Name:<input type="text" name="lastname"></div>
-    <div>Gender:<input type="text" name="gender"></div>
-    <div>Date of birth:<input type="text" name="date_of_birth"></div>
-    <div>Home Address:<input type="textarea" size=98 name="home_address"></div>
-    <div>Email Address:<input type="text" name="email_address"></div>
-    <div>Phone Number:<input type="text" name="phone_number"></div>
-    <div>Username:<input type="text" name="username"></div>
-    <div>Password:<input type="text" name="customer_password"></div>
+    <div class="row">
+    <label>First Name:<input type="text" size=12 name="firstname"></label>
+    <label>Last Name:<input type="text" name="lastname"></label>
+    <label>Gender:<input type="text" name="gender"></label>
+    <label>Date of birth:<input type="text" name="date_of_birth"></label>
+    <label>Home Address:<input type="text" size=98 name="home_address"></label>
+    <label>Email Address:<input type="text" name="email_address"></label>
+    <label>Phone Number:<input type="text" name="phone_number"></label>
+    <label>Username:<input type="text" name="username"></label>
+    <label>Password:<input type="text" name="customer_password"></label>
     <input type="submit" name="register" value="Register">
+    </div>
 </form>
 </body>
 

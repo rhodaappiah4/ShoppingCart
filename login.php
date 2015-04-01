@@ -9,6 +9,10 @@ session_start();
 $cart_data=$_REQUEST['cart_data'];
 $_SESSION['cart_data'] = $cart_data;
 
+if($_SESSION['username']!=null){
+    header('location: order_view.php');
+}
+
 //if the form has been submitted, then
 // 	call login function
 //	if login function return true
@@ -89,47 +93,19 @@ if(isset($_REQUEST['username'])){
     </html>
 
 <?php
-//include_once ('adb.php');
+
 function login($user,$pass){
-    //connect to db
-    //select db
-    //if connection fails, return false
-    //query for the $username and $password
-    //if the user with the right password is found,
-    //	return true
-    //else
-    //	return false
-    $database="shopping_cart";	//this database has to exist.
-    $username="root";		//the main admin user of mysql
-    $password="";			//use root password of mysql
-    $server="localhost";	//name of the server
+    include_once ('cart_functions.php');
+    $adb = new adb(); //should be inside the function to remain in scope
 
-    $link=mysql_connect($server,$username,$password);
-    //if result is false, the connection did not open
-    if(!$link){
-        echo "Failed to connect to mysql.";
-        //display error message from mysql
-        echo mysql_error();
-        return false;	//end script
-    }
-
-    //select the database to work with using the open connection
-    if(!mysql_select_db($database,$link)){
-        echo "Failed to select database.";
-        //display error message from mysql
-        echo mysql_error();
-        exit();
-    }
-
-//  $query = "select username,password from customer where username='$user' and password=MD5('$pass')";
     $query = "select customer_id,username,customer_password from customer where username='$user' and customer_password='$pass'";
-    $dataset= mysql_query($query,$link);
-    $row=mysql_fetch_assoc($dataset);
+    $dataset= $adb->query($query);
+    $row=$adb->fetch($dataset);
     while($row){
         $row['customer_id'];
-        $row=mysql_fetch_assoc($dataset);
+        $row=$adb->fetch($dataset);
     }
-    $num = mysql_num_rows($dataset);
+    $num = $adb->get_num_rows($dataset);
 
     if ($num == 0){
         return false;

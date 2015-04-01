@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <html>
 <head>
     <link rel="stylesheet" href="css/foundation.min.css">
@@ -38,7 +41,7 @@
     <?php
     require_once ("cart_functions.php");
 
-    $cart_data = $_REQUEST['cart_data'];
+    $cart_data = $_SESSION['cart_data'];//TODO: used the session instead of REQUEST; we store that in the login.
     $cart_decoded = json_decode($cart_data);
     $i=0;
     while($i < count($cart_decoded) ) {
@@ -47,7 +50,7 @@
         if ($row = $cart->fetch()) {
             ?>
 
-            <div class="columns small-4">
+            <div class="columns small-4 ">
                 <div class="item cart-item">
                     <span class="itemId" style="display: none"><?php echo $row['product_id'] ?></span>
                     <img data-reveal-id="details" src="<?php echo $row['imagelocation'] ?>">
