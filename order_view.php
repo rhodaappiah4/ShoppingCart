@@ -42,6 +42,7 @@ session_start();
             <?php
             require_once ("cart_functions.php");
 
+<<<<<<< HEAD
             $cart_data = $_SESSION['cart_data'];//TODO: used the session instead of REQUEST; we store that in the login.
             $cart_decoded = json_decode($cart_data);
             $i=0;
@@ -50,6 +51,16 @@ session_start();
                 $cart->get_product_by_id($cart_decoded[$i]->pid);
                 if ($row = $cart->fetch()) {
                     ?>
+=======
+    $cart_data = $_SESSION['cart_data'];//TODO: used the session instead of REQUEST; store that in the login.
+    $cart_decoded = json_decode($cart_data);
+    $i=0;
+    while($i < count($cart_decoded) ) {
+        $cart = new cart_functions();
+        $cart->get_product_by_id($cart_decoded[$i]->pid);
+        if ($row = $cart->fetch()) {
+            ?>
+>>>>>>> c64af43e4fbac3e3eb6f33150f4a8393a61b1661
 
 
                     <div class="row ordered-item item ">
