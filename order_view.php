@@ -41,7 +41,7 @@ session_start();
     <?php
     require_once ("cart_functions.php");
 
-    $cart_data = $_SESSION['cart_data'];//TODO: used the session instead of REQUEST; we store that in the login.
+    $cart_data = $_SESSION['cart_data'];//TODO: used the session instead of REQUEST; store that in the login.
     $cart_decoded = json_decode($cart_data);
     $i=0;
     while($i < count($cart_decoded) ) {

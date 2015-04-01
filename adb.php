@@ -7,7 +7,7 @@
  */
 
 define("DB_HOST", 'localhost');
-define("DB_NAME", 'shoppingcart');
+define("DB_NAME", 'shopping_cart');
 define("DB_PORT", 3306);
 define("DB_USER","root");
 define("DB_PWORD","");

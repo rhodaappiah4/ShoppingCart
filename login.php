@@ -9,9 +9,9 @@ session_start();
 $cart_data=$_REQUEST['cart_data'];
 $_SESSION['cart_data'] = $cart_data;
 
-if($_SESSION['username']!=null){
-    header('location: order_view.php');
-}
+//if($_SESSION['username']!=null){
+//    header('location: order_view.php');
+//}
 
 //if the form has been submitted, then
 // 	call login function
