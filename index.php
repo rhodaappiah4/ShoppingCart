@@ -98,7 +98,7 @@
         }
         ?>
         <div class="columns small-12">
-            <a onclick="redirWithHash('<?=page($pageNumber-1) ?>')">Prev</a>
+            <a onclick="redirWithHash('<?=page($pageNumber<=1?1:$pageNumber-1) ?>')">Prev</a>
             <a onclick="redirWithHash('<?=page($pageNumber+1) ?>')">Next</a>
         </div>
 
