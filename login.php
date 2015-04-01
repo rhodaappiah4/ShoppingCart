@@ -6,10 +6,10 @@
  * Time: 1:49 PM
  */
 session_start();
-$cart_data=$_REQUEST['cart_data'];
-$_SESSION['cart_data'] = $cart_data;
+$cart_data=@$_REQUEST['cart_data'];
+@$_SESSION['cart_data'] = $cart_data;
 
-if($_SESSION['username']!=null){
+if(@$_SESSION['username']!=null){
     header('location: order_view.php');
 }
 
