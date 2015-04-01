@@ -370,7 +370,7 @@ class cart_functions extends adb{
     }
 
     function advertisement($fk_product_id){
-        $sql_query="select product_name, tag_name, tags.tag_id from product,
+        $sql_query="select product_name, tag_name, tags.tag_id,imagelocation from product,
                     tags,product_has_tags,
                         (select product_id, tags.tag_id
                          from product, tags, product_has_tags
@@ -378,6 +378,7 @@ class cart_functions extends adb{
                                 and product_id = $fk_product_id) as productTags
                     where product.product_id = product_has_tags.fk_product_id and tags.tag_id = fk_tags_id
                             and fk_tags_id = productTags.tag_id group by product_name";
+
         if (!$this->query($sql_query)){
             return false;
         }

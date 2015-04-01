@@ -1,4 +1,12 @@
 @font-face {
+    font-family: 'Roboto_Light';
+    src: url('../fonts/Roboto-Light.ttf');
+}
+@font-face {
+    font-family: 'Roboto_Thin';
+    src: url('../fonts/Roboto-Thin.ttf');
+}
+@font-face {
 	font-family: 'icomoon';
 	src:url('../fonts/icomoon.eot?-g0xfnf');
 	src:url('../fonts/icomoon.eot?#iefix-g0xfnf') format('embedded-opentype'),

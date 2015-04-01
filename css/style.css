@@ -78,6 +78,7 @@ header div img{
 main{
     overflow: hidden;
 }
+
 main .item {
     position: relative;
     background-color: #ffffff;
@@ -187,7 +188,25 @@ main .item .remove:hover{
 #cart .items ul li{
     display: block;
 }
-
+main .order-list{
+    box-shadow: 0 0 7px #aaa;
+    margin: 4px 0;
+}
+main .ordered-item{
+    box-shadow: none;
+    border-bottom: 1px dotted #ddd;
+}
+main .ordered-item:last-of-type{
+    border-bottom: none;
+}
+main .ordered-item img{
+    height: 60px;
+    min-width: 30px;
+}
+main .ordered-item .caption{
+    font-family: "Roboto_Light", sans-serif;
+    font-size: 12px;
+}
 footer{
     height: 20px;
     margin-top: 10px;

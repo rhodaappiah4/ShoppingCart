@@ -65,7 +65,6 @@
             return "?page=".$pg;
         }
 
-
         if(empty($_REQUEST) || isset($_REQUEST['page'])){
             if(isset($_REQUEST['page'])){
                 $pageNumber = $_REQUEST['page'];

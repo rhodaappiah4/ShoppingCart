@@ -38,35 +38,60 @@ session_start();
 
 
     <div class="row">
-    <?php
-    require_once ("cart_functions.php");
+        <div class="columns small-4 order-list">
+            <?php
+            require_once ("cart_functions.php");
 
-    $cart_data = $_SESSION['cart_data'];//TODO: used the session instead of REQUEST; we store that in the login.
-    $cart_decoded = json_decode($cart_data);
-    $i=0;
-    while($i < count($cart_decoded) ) {
-        $cart = new cart_functions();
-        $cart->get_product_by_id($cart_decoded[$i]->pid);
-        if ($row = $cart->fetch()) {
+            $cart_data = $_SESSION['cart_data'];//TODO: used the session instead of REQUEST; we store that in the login.
+            $cart_decoded = json_decode($cart_data);
+            $i=0;
+            while($i < count($cart_decoded) ) {
+                $cart = new cart_functions();
+                $cart->get_product_by_id($cart_decoded[$i]->pid);
+                if ($row = $cart->fetch()) {
+                    ?>
+
+
+                    <div class="row ordered-item item ">
+
+                        <div class="small-4 columns">
+                            <span class="itemId" style="display: none"><?php echo $row['product_id'] ?></span>
+                            <img data-reveal-id="details" src="<?php echo $row['imagelocation'] ?>">
+                            <span data-reveal-id="details" class="price caption"><?php echo 'GHC ' . $row['price'] ?></span>
+                        </div>
+                        <div class="small-8 columns">
+                            <span data-reveal-id="details" class="product caption"><?php echo $row['product_name'] ?></span>
+                            <span data-reveal-id="qty" class="qty caption">QTY: <?php echo $cart_decoded[$i]->qty ?></span>
+                            <span class="remove" onclick="removefromCart(this)">Remove from cart</span>
+                        </div>
+                    </div>
+
+
+                <?php
+                }
+                $i++;
+            }
             ?>
-
-            <div class="columns small-4 ">
-                <div class="item cart-item">
-                    <span class="itemId" style="display: none"><?php echo $row['product_id'] ?></span>
-                    <img data-reveal-id="details" src="<?php echo $row['imagelocation'] ?>">
-                    <span data-reveal-id="details" class="product caption"><?php echo $row['product_name'] ?></span>
-                    <span class="remove" onclick="removefromCart(this)">Remove from cart</span>
-                    <span data-reveal-id="details" class="price caption"><?php echo 'GHC ' . $row['price'] ?></span>
-                    <span data-reveal-id="qty" class="qty caption"><?php echo $cart_decoded[$i]->qty ?></span>
-                </div>
+        </div>
+        <div class="columns small-8">
+            <div class="row">
+            <?php
+            $i=0;
+            while($i < count($cart_decoded) ) {
+                $cart = new cart_functions();
+                $cart->advertisement($cart_decoded[$i]->pid);
+                while ($row = $cart->fetch()) {
+                   ?>
+                    <div class="small-3 columns">
+                    <img data-reveal-id="details" src="<?= $row['imagelocation'] ?>">
+                    </div>
+               <?php }
+                $i++;
+            }
+            ?>
             </div>
-
-        <?php
-        }
-        $i++;
-    }
-    ?>
-</div>
+       </div>
+    </div>
 
 </main>
 <footer></footer>
@@ -86,7 +111,7 @@ session_start();
             <div class="quantity"></div><br>
             <div class="color_name"></div><br>
             <div class="price"></div><br>
-<!--            <input class="button" type="submit" value="Buy" onclick="addtoCart(this)">-->
+            <!--            <input class="button" type="submit" value="Buy" onclick="addtoCart(this)">-->
             <a class="close-reveal-modal">&times;</a>
         </div>
     </div>
