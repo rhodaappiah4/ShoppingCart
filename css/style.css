@@ -212,15 +212,20 @@ footer{
     margin-top: 10px;
     background-color: #003f54;
 }
+.ad{
+
+    margin: 4px 0;
+}
 .ad small{
     background-color: #634a24;
     color:#ffffff;
 }
 .ad--Item{
-
+    background-color: white;
 }
 .ad--Item img{
     height: 200px;
+    min-width: 100px;
 }
 .reveal-modal{
     z-index: 400;

@@ -99,9 +99,11 @@ if($_SESSION['username'] == null){
                 $cart->advertisement($cart_decoded[$i]->pid);
                 while ($row = $cart->fetch()) {
                    ?>
-                    <div class="small-2 columns ad--Item">
+                    <div class="small-3 columns">
+                        <div class=" ad--Item">
                         <img data-reveal-id="details" src="<?= $row['imagelocation'] ?>">
                         <span data-reveal-id="details" class="product caption"><?= $row['description'] ?></span>
+                        </div>
                     </div>
                <?php }
                 $i++;
