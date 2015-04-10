@@ -51,7 +51,7 @@
         <?php require 'cart_functions.php';
 
 
-        $records_per_page=4;
+        $records_per_page=2;
         $pageNumber=1;
         $limit=[];
 
